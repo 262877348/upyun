@@ -1,0 +1,89 @@
+{extend name="common/base" /}
+{block name="main"}
+	{include file="Finance/top" /}
+
+	<div class="container content content-invoicing">
+		<div class="panel panel-suffix">
+			<div class="panel-heading no-indent">
+				<div class="panel-title">
+					<span class="pull-right"><button ng-click="vm.createInvoicing($event)" class="btn btn-confirm ladda-button" data-style="expand-right">申请开票</button></span><span class="pull-right date-select"><icon class="icon icon-calender"></icon><input date-range-picker="" class="form-control input-datepicker input-daterange-picker ng-pristine ng-untouched ng-valid ng-empty" type="text" ng-model="vm.dateRange" options="{opens:'left'}"></span>
+					<div class="pull-left">
+						<div class="btn-group dropdown" uib-dropdown="" is-open="status.isopen">
+							<button type="button" class="btn dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">全部<icon class="icon icon-input-down"></icon></button>
+							<ul class="dropdown-menu dropdown-list" role="menu">
+								<!---->
+								<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">全部</a></li>
+								<!---->
+								<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">未开票</a></li>
+								<!---->
+								<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">已开票</a></li>
+								<!---->
+								<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">已取消</a></li>
+								<!---->
+								<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">已邮寄</a></li>
+								<!---->
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="panel-content-table">
+					<table class="table table-invoicing">
+					<thead>
+					<tr>
+						<th>
+							创建时间
+						</th>
+						<th>
+							发票金额
+						</th>
+						<th>
+							发票抬头
+						</th>
+						<th>
+							发票类型
+						</th>
+						<th>
+							发票内容
+						</th>
+						<th>
+							处理状态
+						</th>
+						<th>
+							快递信息
+						</th>
+						<th>
+							操作
+						</th>
+					</tr>
+					</thead>
+					<tbody>
+					<!---->
+					</tbody>
+					</table>
+					<!---->
+					<div ng-if="!vm.invoicingList || vm.invoicingList.length == 0" class="message-none-data">
+						<div class="invoicing-none-data-photo">
+						</div>
+						<p class="text-center" style="margin-bottom: 114px">
+							还没有开票记录
+						</p>
+					</div>
+					<!----><!---->
+				</div>
+				<div class="panel-helper">
+					<helperheading ng-init="status.open = false"><helperbtn ng-click="status.open = status.open == 'help' ? false : 'help'" ng-class="{'open': status.open === 'help'}">Help<helperbtnarrow></helperbtnarrow></helperbtn></helperheading><helperbody><helpercontent ng-class="{'open': status.open === 'help'}">
+					<h4>发票开具说明：</h4>
+					<ul class="list-group">
+						<li>个人实名认证账号可开具个人“增值税普通发票”，企业资质认证账号可开具企业“增值税普通发票或增值税专用发票”；</li>
+						<li>消费金额累计达到 200 元即可申请开票，且单张发票金额不少于 200 元；</li>
+						<li>开票申请提交后，我们将在 5-7 个工作日内处理，发票开具后 3 日内以快递方式免费寄出；</li>
+						<li>请确保您提交的各项开票信息准确完整。若您的开票申请提交后，超过 10 个工作日未有进展的，请联系售后或销售经理。</li>
+					</ul>
+					</helpercontent></helperbody>
+				</div>
+			</div>
+		</div>
+	</div>
+{/block}

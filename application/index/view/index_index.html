@@ -1,0 +1,226 @@
+{extend name="common/base" /}
+{block name="main"}
+	<div class="container content content-dashboard clearfix" ng-init="vm.showEvent=true">
+		<div style="position: absolute; top: 0" class="ng-hide">
+			<div class="guide-general guide-icon-dashboard fade-in fill-mode-both">
+				<img src="images/guide-icon-dashboard.png">
+			</div>
+			<div class="guide-general guide-docs-dashboard fade-in fill-mode-both">
+				<img src="images/guide-docs-dashboard.png">
+			</div>
+			<div class="guide-general guide-icon-workOrder fade-in fill-mode-both">
+				<img src="images/guide-icon-workOrder.png">
+			</div>
+			<div class="guide-general guide-docs-workOrder fade-in fill-mode-both">
+				<img src="images/guide-docs-workOrder.png">
+			</div>
+			<div class="guide-general guide-icon-account fade-in fill-mode-both">
+				<img src="images/guide-icon-account.png"><span>mingyangzhiyuan</span>
+			</div>
+			<div class="guide-general guide-docs-account fade-in fill-mode-both">
+				<img src="images/guide-docs-account.png">
+			</div>
+		</div>
+		<div style="position: absolute; top: 0" class="ng-hide">
+			<div class="guide-general guide-icon-products fade-in fill-mode-both">
+				<img src="images/guide-icon-products.png">
+			</div>
+			<div class="guide-general guide-docs-products fade-in fill-mode-both">
+				<img src="images/guide-docs-products.png">
+			</div>
+			<div class="guide-general guide-docs-products fade-in fill-mode-both">
+				<img src="images/guide-docs-products.png">
+			</div>
+			<div class="guide-general guide-docs-products fade-in fill-mode-both">
+				<img src="images/guide-docs-products.png">
+			</div>
+			<div class="guide-general guide-icon-functions fade-in fill-mode-both">
+				<img src="images/guide-icon-functions.png">
+			</div>
+			<div class="guide-general guide-docs-functions fade-in fill-mode-both">
+				<img src="images/guide-docs-functions.png">
+			</div>
+			<div class="guide-general guide-docs-functions fade-in fill-mode-both">
+				<img src="images/guide-docs-functions.png">
+			</div>
+			<div class="guide-general guide-docs-functions fade-in fill-mode-both">
+				<img src="images/guide-docs-functions.png">
+			</div>
+		</div>
+		<div style="position: absolute; top: 0" class="ng-hide">
+			<div class="guide-general guide-next-new fade-in fill-mode-both ng-hide">
+				<img src="images/guide-next.png"><span>不再提示 &gt;&gt;</span>
+			</div>
+			<div class="guide-general guide-skip-new fade-in fill-mode-both ng-hide">
+				<img src="images/guide-skip.png">
+			</div>
+		</div>
+
+		<div class="panel">
+			<div class="panel-body">
+				<div class="panel-content panel-content-usage">
+					<accountinfo><accountprofile><profilename class="auto-wrap ng-hide">朱金奎</profilename><profilename class="auto-wrap">北京铭扬致远科技有限公司</profilename><profileaccount>账号: mingyangzhiyuan<!----></profileaccount><verifystatus><a href="#" class="icon-usage-realname passed"></a><span class="text-usage-realname passed">已认证</span><span class="text-usage-realname">未认证</span><a href="#" class="icon-usage-email passed"></a><span class="text-usage-email passed">已验证</span><span class="text-usage-email">未验证</span><a href="#" class="icon-usage-phone passed"></a><span class="text-usage-phone passed">已验证</span><span class="text-usage-phone">未验证</span><!--认证按钮--><profileoperate class="ng-hide"><button class="btn btn-cancel">实名认证</button></profileoperate><!--认证审核中--><profileoperate class="ng-hide"><span class="text-danger">认证审核中</span></profileoperate><!--认证审核拒绝--><profileoperate class="ng-hide"><span class="text-danger">认证审核拒绝</span></profileoperate><!--认证需修改--><profileoperate class="ng-hide"><span class="text-danger">认证需修改</span></profileoperate><!--已认证或已激活的老用户--><profileoperate><a href="{:url('Finance/index')}" class="btn btn-cancel">充值</a><a href="#" class="btn btn-cancel">账单</a></profileoperate></verifystatus></accountprofile></accountinfo><accountusage><usageitembox><usageitem><span>账户余额</span><!----><a href="#" class="text-muted">0<usagedecimal class="ng-hide">.</usagedecimal><usageunit>&nbsp;元</usageunit></a><!----><!----></usageitem><usageitem><span>代金券剩余</span><!----><a href="#" class="text-muted">1<usageunit>&nbsp;张</usageunit></a><!----><!----></usageitem><usageitem><span>剩余资源</span><!----><a href="#" class="text-muted">0.000<usageunit>&nbsp;B</usageunit></a><!----><!----></usageitem></usageitembox></accountusage><productexpress>
+					<div class="guide-general guide-icon-productsInfo fade-in fill-mode-both ng-hide">
+						<img src="images/guide-icon-productsInfo.png">
+					</div>
+					<div class="guide-general guide-docs-productsInfo fade-in fill-mode-both ng-hide">
+						<img src="images/guide-docs-productsInfo.png">
+					</div>
+					<p class="clearfix">
+						<b>产品快报</b><a class="more-express" href="#" target="_blank">更多 &gt;&gt;</a>
+					</p>
+					<div>
+						<!----><a class="express-title" ng-href="#" target="_blank" href="#">如何通过又拍云WebP兼容方案来减少图片体积？</a><!----><a class="express-title" ng-href="#" target="_blank" href="#">深度解析 H.265 视频解决方案</a><!----><a class="express-title" ng-href="#" target="_blank" href="#">看图说话，P2P 分享率 90% 以上的 P2P-CDN 服务，来了！</a><!---->
+					</div>
+					</productexpress>
+				</div>
+			</div>
+		</div>
+		<!-- 基础产品 -->
+		<div class="panel">
+			<div class="panel-heading no-indent">
+				<div style="position: absolute" class="ng-hide">
+					<div class="guide-general guide-icon-services fade-in fill-mode-both">
+						<img src="images/guide-icon-services.png">
+					</div>
+					<div class="guide-general guide-docs-services fade-in fill-mode-both">
+						<img src="images/guide-docs-services.png">
+					</div>
+					<div class="guide-general guide-icon-services-added fade-in fill-mode-both">
+						<img src="images/guide-icon-services-added.png">
+					</div>
+				</div>
+				<div class="panel-title">
+					<headline>基础产品</headline>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="panel-content value-added-service">
+					<div class="service-box inline-block">
+						<div class="db-ser-icon service-icon-cdn">
+						</div>
+						<p class="db-ser-title">
+							CDN
+						</p>
+						<div class="db-ser-des">
+							又拍云 CDN，有效解决了互联网网络拥塞问题，提升终端用户访问速度，增强网站的可用性，同时可大幅降低源站压力。
+						</div>
+						<div class="db-ser-btn">
+							<button class="btn btn-confirm">立即使用</button>
+						</div>
+						<a class="db-ser-guide" href="#">创建服务</a><a class="db-ser-guide-right" href="#" target="_blank">指南 &gt;&gt;</a>
+					</div>
+					<div class="service-box inline-block">
+						<div class="db-ser-icon service-icon-live">
+						</div>
+						<p class="db-ser-title">
+							直播云
+						</p>
+						<div class="db-ser-des">
+							又拍云直播为企业提供端到端的一站式直播解决方案，提供低延迟，高并发，可灵活配置的音视频直播服务。
+						</div>
+						<div class="db-ser-btn">
+							<button class="btn btn-confirm">立即使用</button>
+						</div>
+						<a class="db-ser-guide" href="#" target="_blank">使用指南</a>
+					</div>
+					<div class="service-box inline-block">
+						<div class="db-ser-icon service-icon-file">
+						</div>
+						<p class="db-ser-title">
+							云存储
+						</p>
+						<div class="db-ser-des">
+							又拍云存储，是面向互联网应用的对象存储服务，可满足大数据企业应用背景下的数据传输、处理、存储、分发与容灾需求。
+						</div>
+						<div class="db-ser-btn">
+							<button class="btn btn-confirm">立即使用</button>
+						</div>
+						<a class="db-ser-guide" href="#">创建服务</a><a class="db-ser-guide-right" href="#" target="_blank">指南 &gt;&gt;</a>
+					</div>
+					<div class="service-box inline-block">
+						<div class="db-ser-icon service-icon-process">
+						</div>
+						<p class="db-ser-title">
+							云处理
+						</p>
+						<div class="db-ser-des">
+							又拍云处理，针对多媒体数据（图片、音视频）提供多样灵活的多终端、多规格内容输出加工服务。
+						</div>
+						<div class="db-ser-btn">
+							<button class="btn btn-confirm">功能介绍</button>
+						</div>
+						<a class="db-ser-guide" href="#" target="_blank">使用指南</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel padding-top-10">
+			<div class="panel-heading no-indent">
+				<div class="panel-title">
+					<headline>增值服务</headline>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="panel-content value-added-service">
+					<div class="service-box inline-block">
+						<div class="db-ser-icon service-icon-ssl">
+						</div>
+						<p class="db-ser-title">
+							SSL 证书服务
+						</p>
+						<div class="db-ser-des">
+							又拍云 SSL 证书服务，提供证书的申购、管理、部署等功能。流程简单快捷，为用户提供一站式 HTTPS 安全解决方案。
+						</div>
+						<div class="db-ser-btn">
+							<a class="btn btn-confirm" href="#">立即使用</a>
+						</div>
+						<a class="db-ser-guide" href="#" target="_blank">使用指南</a>
+					</div>
+					<div class="service-box inline-block">
+						<div class="db-ser-icon service-icon-sms">
+						</div>
+						<p class="db-ser-title">
+							短信服务
+						</p>
+						<div class="db-ser-des">
+							又拍云短信服务，三网合一，提供企业级短信送达服务，业务提醒、验证码、营销短信，秒级送达，送达率＞99%。
+						</div>
+						<div class="db-ser-btn">
+							<button class="btn btn-confirm">立即使用</button>
+						</div>
+						<a class="db-ser-guide" href="#" target="_blank">使用指南</a>
+					</div>
+					<div class="service-box inline-block">
+						<div class="db-ser-icon service-icon-audit">
+						</div>
+						<p class="db-ser-title">
+							内容识别服务
+						</p>
+						<div class="db-ser-des">
+							又拍云内容识别服务，能实时处理图片、点播、直播等内容，识别色情、广告等信息，为用户提供新型信息安全解决方案。
+						</div>
+						<div class="db-ser-btn">
+							<button class="btn btn-confirm">立即使用</button>
+						</div>
+						<a class="db-ser-guide" href="#" target="_blank">使用指南</a>
+					</div>
+					<div class="service-box inline-block">
+						<div class="db-ser-icon service-icon-flux">
+						</div>
+						<p class="db-ser-title">
+							流量营销服务
+						</p>
+						<div class="db-ser-des">
+							又拍云流量营销服务，整合三大运营商流量资源，帮助用户开展品牌宣传、APP/游戏/微信公众号/网站拉新等多种营销活动。
+						</div>
+						<div class="db-ser-btn">
+							<button class="btn btn-confirm">立即使用</button>
+						</div>
+						<a class="db-ser-guide" href="#" target="_blank">使用指南</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{/block}

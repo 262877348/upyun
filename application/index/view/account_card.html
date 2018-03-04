@@ -1,0 +1,129 @@
+{extend name="common/base" /}
+{block name="main"}
+	<backbar class="modal-backbar"><a href="/account/profile/">账户管理</a></backbar>
+	<popmodal>
+	<div class="container content-verify">
+		<div class="panel clearfix">
+			<div class="panel-heading no-indent">
+				<div class="panel-title">
+					<headline>企业认证</headline>
+				</div>
+			</div>
+			<!---->
+			<div class="panel-heading-form">
+				<div class="panel-heading-tip">
+					<span>认证申请提交后，又拍云工作人员将在1个工作日内处理反馈</span><br>
+					<span>申请通过后，系统将自动启用您账户的又拍云存储服务和外链访问功能。</span>
+				</div>
+				<form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern ng-valid-url ng-valid-minlength ng-valid-maxlength" role="form" name="formVerifyCompany" novalidate="">
+					<!-- 认证类型 -->
+					<div class="form-group col-md-9 no-padding-left">
+						<label class="panel-heading-form-label">认证类型</label>
+						<div class="form-input company-auth">
+							<input id="authCompany" type="radio" ng-model="vm.authType" name="authType" value="company" class="ng-pristine ng-untouched ng-valid ng-not-empty"><label for="authCompany">企业</label><input id="authNonProfitOrg" type="radio" ng-model="vm.authType" name="authType" value="nonProfitOrg" class="ng-pristine ng-untouched ng-valid ng-not-empty"><label for="authNonProfitOrg" class="margin-left-30">非盈利组织</label>
+						</div>
+					</div>
+					<!--所属行业：行业类别 + 细分行业-->
+					<div class="form-group col-md-9 no-padding-left">
+						<label class="panel-heading-form-label">所属行业</label>
+						<div class="form-input">
+							<div class="select-inline" style="min-width: 130px">
+								<select name="category" ng-model="vm.identity.category" class="form-control ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" ng-change="vm.updateCategory(vm.identity.category)" required="">
+									<option value="" style="display: none">选择行业类别</option>
+									<!---->
+									<option value="移动应用" ng-repeat="category in vm.mainCategories">移动应用</option>
+									<!---->
+									<option value="门户网站" ng-repeat="category in vm.mainCategories">门户网站</option>
+									<!---->
+									<option value="行业服务" ng-repeat="category in vm.mainCategories">行业服务</option>
+									<!---->
+									<option value="电子商务" ng-repeat="category in vm.mainCategories">电子商务</option>
+									<!---->
+									<option value="音视频" ng-repeat="category in vm.mainCategories">音视频</option>
+									<!---->
+									<option value="游戏领域" ng-repeat="category in vm.mainCategories">游戏领域</option>
+									<!---->
+									<option value="其他" ng-repeat="category in vm.mainCategories" selected="selected">其他</option>
+									<!---->
+								</select>
+								<icon class="icon icon-input-down"></icon>
+							</div>
+							<!----><!----><!---->
+						</div>
+					</div>
+					<!--网站/产品-->
+					<div class="form-group col-md-9 no-padding-left">
+						<label class="panel-heading-form-label">网站/产品</label>
+						<div class="form-input">
+							<input type="text" name="production_name" class="form-control ng-pristine ng-untouched ng-valid-pattern ng-not-empty ng-valid ng-valid-required" ng-model="vm.identity.production_name" ng-pattern="/^[\u4e00-\u9fa5a-zA-Z0-9]{1,50}$/" placeholder=" 请输入经营网站或产品app名称" required="" up-focus=""><!---->
+						</div>
+					</div>
+					<!--网站地址-->
+					<div class="form-group col-md-9 no-padding-left">
+						<label class="panel-heading-form-label">网站地址</label>
+						<div class="form-input">
+							<input type="url" name="website" class="form-control ng-pristine ng-untouched ng-valid ng-valid-url ng-valid-pattern ng-not-empty" ng-model="vm.identity.website" ng-pattern="/(https?:\/\/){0,1}([A-z0-9]+[_\-]?[A-z0-9]+\.)*[A-z0-9]+\-?[A-z0-9]+\.[A-z]{2,}(\/.*)*\/?/" placeholder="非必填项" up-focus="">
+							<div class="help-block help-block-error ng-hide" ng-show="formVerifyCompany.website.$dirty &amp;&amp; formVerifyCompany.website.$invalid">
+								<span ng-show="formVerifyCompany.website.$invalid" class="ng-hide">请输入合法的 URL，包括"http://"</span>
+							</div>
+						</div>
+					</div>
+					<!-- 企业名称 --><!---->
+					<div class="form-group col-md-9 no-padding-left" ng-if="vm.authType === 'company'">
+						<label for="company_name" class="panel-heading-form-label">企业名称</label>
+						<div class="form-input">
+							<input type="text" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-valid-minlength ng-valid-maxlength" id="company_name" name="company_name" ng-pattern="/^[\u4e00-\u9fa5\(\)\（\）]*$|^[a-zA-Z\(\)\（\） ]*$/" ng-minlength="4" ng-maxlength="30" placeholder="请填写营业执照中的名称" ng-model="vm.identity.company_name" required="" up-focus="" autocomplete="off"><!-- <p class="help-block help-block-error" ng-show="formVerifyCompany.company_name.$dirty && formVerifyCompany.company_name.$invalid">
+							<span ng-show="formVerifyCompany.company_name.$error.required">请填写营业执照中的名称</span>
+						</p>
+						 -->
+						<div class="help-block help-block-error ng-active ng-hide" ng-messages="formVerifyCompany.company_name.$error" ng-show="formVerifyCompany.company_name.$dirty &amp;&amp; formVerifyCompany.company_name.$invalid">
+							<!----><span ng-message="required">请填写企业名称</span><!----><!---->
+						</div>
+					</div>
+				</div>
+				<!----><!-- 营业执照号或社会信用代码 --><!---->
+				<div class="form-group col-md-9 no-padding-left" ng-if="vm.authType === 'company'">
+					<label class="panel-heading-form-label">
+					<div class="btn-group dropdown btn_dropdown_auth" uib-dropdown="" is-open="status.isopen">
+						<button type="button" class="btn dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">社会信用代码<icon class="icon icon-input-down"></icon></button>
+						<ul class="dropdown-menu dropdown-list" role="menu">
+							<li class="dropdown-list-item pointer"><a ng-click="vm.changeStatus(0)">营业执照注册号</a></li>
+							<li class="dropdown-list-item pointer"><a ng-click="vm.changeStatus(1)">统一社会信用代码</a></li>
+						</ul>
+					</div>
+					</label>
+					<div class="form-input">
+						<!----><!----><input ng-if="vm.status" type="text" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-minlength ng-valid-maxlength" id="business_licence_code" name="business_licence_code" ng-model="vm.identity.business_licence_code" placeholder="请输入 18 位数字或字母的统一社会信用代码" required="" minlength="18" maxlength="18" up-focus=""><!----><!---->
+					</div>
+				</div>
+				<!----><!-- 组织机构名称 --><!----><!-- 组织机构代码 --><!----><!-- 上传营业执照 或 组织证件 -->
+				<div class="form-group col-md-10 no-padding-left">
+					<!----><label for="licence_pic" class="panel-heading-form-label" ng-if="vm.authType === 'company'">营业执照</label><!----><!---->
+					<div class="form-input upload-licence">
+						<input type="file" id="licence_pic_input" name="licence_pic" ng-model="vm.identity.licence_pic" on-file-change="readUrl" accept="image/png,image/jpg,image/jpeg,image/bnp,image/gif" class="ng-pristine ng-untouched ng-valid ng-empty"><!----><!---->
+						<div class="custom-tip-pic">
+							<div class="pics">
+								<img id="licence_pic" src="/assets/dashboard/identification_company.svg">
+							</div>
+						</div>
+						<ul class="list-group no-padding-left">
+							<li>请上传大小不超过 5M 的图片，支持 .jpg .jpeg .bmp .gif .png 格式。</li>
+							<!----><!---->
+							<li ng-if="vm.authType === 'nonProfitOrg' || vm.status">请提供证件的原件照片或彩色扫描件（正副本均可），文字/盖章清晰可见。</li>
+							<!---->
+						</ul>
+					</div>
+				</div>
+				<div class="clearfix">
+				</div>
+			</form>
+			<div class="pull-right operator-btn-group">
+				<button class="btn btn-cancel" ng-click="vm.skip()">取消</button><button class="btn btn-confirm ladda-button" ng-click="vm.submit($event)" data-style="expand-right">提交</button>
+			</div>
+			<div class="clearfix">
+			</div>
+		</div>
+	</div>
+	</div>
+	</popmodal>
+{/block}

@@ -1,0 +1,342 @@
+{extend name="common/base" /}
+{block name="main"}
+	<div class="content content-monitor container loading-wrap">
+		<div class="loading-icon ng-hide" ng-show="vm.showLoading">
+			<div class="upyun-loading-icon">
+			</div>
+		</div>
+		<div class="panel panel-suffix">
+			<div class="panel-heading no-indent">
+				<div class="panel-title">
+					<headline>服务监控</headline><i class="glyphicon glyphicon-question-sign icon-blue glyphicon-question-fix-position" tooltip-placement="right" tooltip-append-to-body="true" uib-tooltip="目前仅支持 CDN 加速服务监控"></i><span class="count-down pull-right">54 秒后将自动更新</span>
+				</div>
+			</div>
+			<div class="panel-heading no-indent" style="height: auto">
+				<div>
+					<service-search api="vm.serviceSearchApi" do-get="vm.doGet" current-bucket="vm.current_bucket" current-domain="vm.current_domain" monitor-params="vm.monitorParams" current-type="vm.currentType">
+					<div class="service-search btn-group directive dropdown" uib-dropdown="" auto-close="outsideClick" is-open="vm.status.isopen">
+						<i class="up-icon in-input icon-bucket-file" ng-show="vm.currentBucket" ng-class="{'icon-bucket-file': vm.currentType === 'file' || vm.currentType === 'image', 'icon-bucket-cdn': vm.currentType === 'ucdn' || vm.currentType === 'cdn'}"></i><button id="bucketName" type="button" class="btn form-control input-search input-search-bucket dropdown-toggle" uib-dropdown-toggle="" ng-disabled="vm.disabled" aria-haspopup="true" aria-expanded="false"><span ng-hide="vm.currentBucket" class="ng-hide">服务/域名</span><span ng-show="vm.currentBucket" style="margin-left: 15px" class="">myzy-images</span><icon class="icon icon-input-down"></icon></button>
+						<ul class="dropdown-menu dropdown-menu-search dropdown-list direvtive" role="menu" aria-labelledby="bucketName" uib-dropdown-menu="">
+							<li class="dropdown-menu-tab"><a href="#" class="pull-left active" ng-class="{'active': vm.chooseType == 'bucket'}" ng-click="vm.change('bucket')">服务名称</a><a href="#" class="pull-right" ng-class="{'active': vm.chooseType == 'domain'}" ng-click="vm.change('domain')">加速域名</a>
+							<div class="clearfix">
+							</div>
+							</li>
+							<li class="dropdown-menu-input clearfix"><input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="vm.searchParams.key" placeholder="请输入服务名"></li>
+							<!----><!---->
+							<li class="dropdown-list-item" role="menuitem" ng-if="vm.chooseType == 'bucket'" ng-repeat="service in vm.searchResult.services"><a href="#" ng-click="vm.selectBucket(service.bucket_name, service.domains, service.type)"><span>myzy-images</span></a></li>
+							<!----><!----><!----><!----><!----><!----><!----><!----><!---->
+							<li class="dropdown-menu-pagination" ng-if="vm.chooseType == 'bucket'"><a href="#" class="pull-left disabled" ng-click="vm.goPrev()" ng-class="{ disabled: !vm.searchResult.pager.since}"><i class="glyphicon glyphicon-chevron-left"></i></a><a href="#" class="pull-right disabled" ng-click="vm.goNext()" ng-class="{ disabled: !vm.searchResult.pager.max}"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+							<!---->
+						</ul>
+					</div>
+					<!--域名选择--><!---->
+					<div class="btn-group directive dropdown" uib-dropdown="" is-open="status3.isopen" ng-if="vm.domainSelect &amp;&amp; vm.chooseType == 'bucket' &amp;&amp; vm.currentBucket &amp;&amp; monitorParams.flow_source !== 'backsource'">
+						<button id="domainList" type="button" class="btn dropdown-toggle" uib-dropdown-toggle="" style="min-width: 120px" aria-haspopup="true" aria-expanded="false">加速域名<icon class="icon icon-input-down"></icon></button>
+						<ul class="dropdown-menu dropdown-list" role="menu" aria-labelledby="domainList">
+							<li role="menuitem"><a href="#" ng-click="vm.selectServiceDomain('')">全部域名</a></li>
+							<!---->
+							<li role="menuitem" ng-repeat="domain in vm.searchResult.domains"><a href="#" ng-click="vm.selectServiceDomain(domain.domain)">myzy-images.test.upcdn.net</a></li>
+							<!---->
+							<li role="menuitem" ng-repeat="domain in vm.searchResult.domains"><a href="#" ng-click="vm.selectServiceDomain(domain.domain)">images.22058.com</a></li>
+							<!---->
+						</ul>
+					</div>
+					<!----><!--域名类型选择//改为流量类型-->
+					<div class="btn-group directive dropdown ng-hide" uib-dropdown="" is-open="status6.isopen" ng-show="flowType === 'live'">
+						<button id="domainTypeList" type="button" class="btn dropdown-toggle" uib-dropdown-toggle="" style="min-width: 120px" aria-haspopup="true" aria-expanded="false"><span ng-show="!!vm.currentDomainType">下行流量</span><span ng-hide="!!vm.currentDomainType" class="ng-hide">流量类型</span><icon class="icon icon-input-down"></icon></button>
+						<ul class="dropdown-menu dropdown-list" role="menu" aria-labelledby="domainTypeList">
+							<!---->
+							<li role="menuitem" ng-repeat="(key, value) in vm.domainTypeMap"><a href="#" ng-click="api.selectDomainType(key, true)">上行流量</a></li>
+							<!---->
+							<li role="menuitem" ng-repeat="(key, value) in vm.domainTypeMap"><a href="#" ng-click="api.selectDomainType(key, true)">下行流量</a></li>
+							<!---->
+						</ul>
+					</div>
+					</service-search>
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-confirm" ng-class="{ 'btn-confirm': vm.mapLine === 'avg', 'btn-cancel': vm.mapLine !== 'avg'}" ng-click="vm.switchData(vm.mapDim, 'avg')">平均</button><button type="button" class="btn btn-cancel" ng-class="{ 'btn-confirm': vm.mapLine === '电信', 'btn-cancel': vm.mapLine !== '电信'}" ng-click="vm.switchData(vm.mapDim, '电信')">电信</button><button type="button" class="btn btn-cancel" ng-class="{ 'btn-confirm': vm.mapLine === '联通', 'btn-cancel': vm.mapLine !== '联通'}" ng-click="vm.switchData(vm.mapDim, '联通')">联通</button><button type="button" class="btn btn-cancel" ng-class="{ 'btn-confirm': vm.mapLine === '移动', 'btn-cancel': vm.mapLine !== '移动'}" ng-click="vm.switchData(vm.mapDim, '移动')">移动</button>
+					</div>
+				</div>
+				<div class="panel-heading-label">
+					<span class="label label-white" ng-hide="vm.current_bucket === '全服务'">myzy-images <!----><a href="#" ng-if="vm.current_bucket !== '全服务'" ng-click="vm.clearService()">x</a><!----></span><span class="label label-white ng-hide" ng-show="vm.current_domain"><a href="#" ng-click="vm.clearDomain()">x</a></span><span class="label label-white ng-hide" ng-show="vm.current_region"><a href="#" ng-click="vm.clearRegion()">x</a></span><span class="label label-white ng-hide" ng-show="vm.current_isp"><a href="#" ng-click="vm.clearIsp()">x</a></span>
+				</div>
+			</div>
+			<!--实时-->
+			<div class="loading-wrap">
+				<div class="loading-icon ng-hide" ng-show="vm.switchLoading">
+					<div class="upyun-loading-icon">
+					</div>
+				</div>
+				<ul class="list-unstyled clearfix" id="realtimeScroll">
+					<li><!--健康度-->
+					<div class="realtime-container">
+						<div class="realtime-chart">
+							<pie-chart config="vm.healthChartOpts" data="vm.healthChartDataset">
+							<div _echarts_instance_="ec_1520126673889" style="width: 100px; height: 100px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: transparent; position: relative;">
+								<div style="position: relative; overflow: hidden; width: 100px; height: 100px; cursor: default;">
+									<canvas width="100" height="100" data-zr-dom-id="zr_0" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
+								</div>
+								<div style="display: none;">
+								</div>
+								<div style="display: none;">
+								</div>
+								<div style="display: none;">
+								</div>
+							</div>
+							</pie-chart>
+						</div>
+						<span class="health-caption">健康度</span>
+						<div class="health-detail">
+							<span class="health-value" tooltip-placement="bottom" uib-tooltip="HTTP 状态码为 2xx 和 3xx 的请求数占比">暂无数据 </span><span class="health-unit health-unit-health ng-hide" ng-hide="(!vm.realtimeData.health_degree[vm.mapLine] || vm.realtimeData.health_degree[vm.mapLine] === 0)">%</span>
+						</div>
+						<span class="link"><a class="btn btn-normal btn-health" ng-click="vm.viewHistory('Health')"><i class="up-icon icon-history"></i>历史 </a><a class="btn btn-normal btn-health" ng-click="vm.checkHealthDetail()" nd-disabled="!vm.realtime_data.healths"><i class="up-icon icon-detail"></i>详情</a></span>
+					</div>
+					</li>
+					<li><!--缓存命中率-->
+					<div class="realtime-container">
+						<div class="realtime-chart">
+							<pie-chart config="vm.hitChartOpts" data="vm.hitChartDataset">
+							<div _echarts_instance_="ec_1520126673890" style="width: 100px; height: 100px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: transparent; position: relative;">
+								<div style="position: relative; overflow: hidden; width: 100px; height: 100px; cursor: default;">
+									<canvas width="100" height="100" data-zr-dom-id="zr_0" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
+								</div>
+								<div style="display: none;">
+								</div>
+								<div style="display: none;">
+								</div>
+								<div style="display: none;">
+								</div>
+							</div>
+							</pie-chart>
+						</div>
+						<span class="health-caption">缓存命中率</span>
+						<div class="health-detail">
+							<span class="health-value" tooltip-placement="bottom" uib-tooltip="CDN 节点直接命中的请求数占比">暂无数据 </span><span class="health-unit health-unit-hit ng-hide" ng-hide="(!vm.realtimeData.hit_degree[vm.mapLine] || vm.realtimeData.hit_degree[vm.mapLine] === 0)">%</span>
+						</div>
+						<span class="link"><a class="btn btn-normal btn-hit" ng-click="vm.viewHistory('Hit')"><i class="up-icon icon-history"></i>历史</a></span>
+					</div>
+					</li>
+					<li><!--平均下载速度-->
+					<div class="realtime-container">
+						<div class="realtime-chart">
+							<gauge-chart config="vm.downloadChartOpts" data="vm.downloadChartDataset">
+							<div _echarts_instance_="ec_1520126673891" style="width: 100px; height: 100px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: transparent; position: relative;">
+								<div style="position: relative; overflow: hidden; width: 100px; height: 100px; cursor: default;">
+									<canvas width="100" height="100" data-zr-dom-id="zr_0" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
+								</div>
+								<div style="display: none;">
+								</div>
+								<div style="display: none;">
+								</div>
+								<div style="display: none;">
+								</div>
+							</div>
+							</gauge-chart>
+						</div>
+						<span class="health-caption">平均下载速度</span>
+						<div class="health-detail">
+							<span class="health-value health-value-small" tooltip-placement="bottom" uib-tooltip="资源文件的平均下载速度">暂无数据 </span><span class="health-unit health-unit-speed ng-hide" ng-hide="(!vm.realtimeData.avg_download_speed[vm.mapLine] || vm.realtimeData.avg_download_speed[vm.mapLine] === 0)">KB/s</span>
+						</div>
+						<span class="link"><a class="btn btn-normal btn-speed" ng-click="vm.viewHistory('Speed')"><i class="up-icon icon-history"></i>历史</a></span>
+					</div>
+					</li>
+					<li><!--拦截攻击次数-->
+					<div class="realtime-container">
+						<div class="realtime-chart">
+							<pie-chart config="vm.wafChartOpts" data="vm.wafChartDataset">
+							<div _echarts_instance_="ec_1520126673892" style="width: 100px; height: 100px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: transparent; position: relative;">
+								<div style="position: relative; overflow: hidden; width: 100px; height: 100px; cursor: default;">
+									<canvas width="100" height="100" data-zr-dom-id="zr_0" style="position: absolute; left: 0px; top: 0px; width: 100px; height: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
+								</div>
+								<div style="display: none;">
+								</div>
+								<div style="display: none;">
+								</div>
+								<div style="display: none;">
+								</div>
+								<div style="display: none;">
+								</div>
+							</div>
+							</pie-chart>
+						</div>
+						<span class="health-caption">拦截攻击次数</span>
+						<div class="health-detail">
+							<span class="health-value health-value-small" tooltip-placement="bottom" uib-tooltip="WAF 防攻击次数">暂无数据 </span><span class="health-unit health-unit-waf ng-hide" ng-hide="(!vm.realtimeData.waf[vm.mapLine] || vm.waf_anti_attack === 0)">次</span>
+						</div>
+						<span class="link"><a class="btn btn-normal btn-waf" ng-click="vm.viewHistory('Waf')"><i class="up-icon icon-history"></i>历史</a></span>
+					</div>
+					</li>
+				</ul>
+			</div>
+			<div class="panel-body">
+				<div class="loading-icon ng-hide" ng-show="vm.switchLoading">
+					<div class="upyun-loading-icon">
+					</div>
+				</div>
+				<div class="panel-content">
+					<!--地图-->
+					<div class="pull-left map-container">
+						<map-chart class="map-chart" config="vm.mapChartOpts" data="vm.mapChartDataset" height="450">
+						<div _echarts_instance_="ec_1520126673893" style="width: 622px; height: 450px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: transparent; position: relative;">
+							<div style="position: relative; overflow: hidden; width: 622px; height: 450px; cursor: default;">
+								<canvas width="622" height="450" data-zr-dom-id="zr_0" style="position: absolute; left: 0px; top: 0px; width: 622px; height: 450px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
+							</div>
+							<div style="display: none;">
+							</div>
+							<div style="display: none;">
+							</div>
+							<div style="position: absolute; display: none; border-style: solid; white-space: nowrap; background-color: rgba(50, 50, 50, 0.7); border-width: 1px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 14px; font-family: &quot;Helvetica Neue&quot;, &quot;Luxi Sans&quot;, &quot;DejaVu Sans&quot;, Tahoma, STHeiti, &quot;Microsoft YaHei&quot;, SimHei; line-height: 21px; padding: 10px; left: 349px; top: 348px;">
+								<h5>广西 </h5>
+								 无数据
+							</div>
+						</div>
+						</map-chart>
+					</div>
+					<!--省份-->
+					<div class="pull-right provinces-container">
+						<h4>各地区速度</h4>
+						<div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">安徽:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">北京:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">重庆:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">福建:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">甘肃:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">广东:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">广西:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">贵州:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">海南:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">河北:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">黑龙江:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">河南:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">湖北:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">湖南:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">江苏:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">江西:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">吉林:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">辽宁:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">内蒙古:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">宁夏:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">青海:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">陕西:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">山东:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">上海:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">山西:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">四川:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">天津:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">新疆:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">西藏:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">云南:</span></a> -
+							</div>
+							<!---->
+							<div class="cell" ng-repeat="cell in vm.mapData" ng-class="{ 'has-data': cell.value !== '-' }">
+								<a href="#" ng-click="vm.mapDetail(cell.name)"><span class="province-name">浙江:</span></a> -
+							</div>
+							<!---->
+						</div>
+					</div>
+				</div>
+				<div class="panel-helper fix-panel-helper-padding">
+					<helperheading ng-init="status.open = false"><helperbtn ng-click="status.open = status.open == 'help' ? false : 'help'" ng-class="{'open': status.open === 'help'}">Help<helperbtnarrow></helperbtnarrow></helperbtn></helperheading><helperbody><helpercontent ng-class="{'open': status.open === 'help'}">
+					<ul class="list-group">
+						<li>健康度：统计所有请求的 HTTP Status Code，计算各 code 所占的比例。</li>
+						<li>缓存命中率：总请求数中，所有命中缓存的请求数所占的比例。</li>
+						<li>平均下载速度：资源文件的平均下载速度。</li>
+						<li>攻击拦截次数：拦截的跨站攻击、SQL 注入和其他代码执行等多种攻击的数量。</li>
+						<li>查看产品<a href="#" target="_blank" style="color: #52ACD9">功能说明</a></li>
+					</ul>
+					</helpercontent></helperbody>
+				</div>
+				<!-- /.panel-helper -->
+			</div>
+		</div>
+	</div>
+{/block}

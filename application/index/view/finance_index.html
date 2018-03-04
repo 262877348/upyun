@@ -1,0 +1,140 @@
+{extend name="common/base" /}
+{block name="main"}
+	{include file="Finance/top" /}
+	
+	<div class="container content content-dashboard content-charge">
+		<div class="panel" ng-init="value = 100">
+			<div class="panel-body">
+				<h4 class="charge-title">线上充值</h4>
+				<div class="content clearfix" style="width: 920px">
+					<div class="panel-content" style="position: relative; margin-top: -25px">
+						<form class="form-horizontal ng-pristine ng-valid ng-valid-required ng-valid-min ng-valid-pattern" action="orders/recharge/" target="_blank" method="post" name="chargeForm">
+							<div class="form-group">
+								<label for="Charge-paymode" class="col-sm-2 control-label">支付方式</label>
+								<div class="col-sm-10">
+									<label class="radio-inline radio-group"><img src="__MODULE_IMG__/alipay.png" alt="alipay" height="45px"></label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="Charge-amount" class="col-sm-2 control-label">充值金额</label>
+								<div class="col-sm-10">
+									<label class="radio-inline radio-group"><input id="200" class="normal-radio ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="radio" name="price" value="200" ng-model="vm.chargeValue" ng-checked="true" ng-click="vm.custom = false" required="" checked="checked"><label for="200"><span>200 元</span></label></label><label class="radio-inline radio-group"><input id="400" class="normal-radio ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="radio" name="price" value="400" ng-model="vm.chargeValue" ng-click="vm.custom = false" required=""><label for="400"><span>400 元</span></label></label><label class="radio-inline radio-group"><input id="600" class="normal-radio ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="radio" name="price" value="600" ng-model="vm.chargeValue" ng-click="vm.custom = false" required=""><label for="600"><span>600 元</span></label></label><label class="radio-inline radio-group"><input id="1000" class="normal-radio ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="radio" name="price" value="1000" ng-model="vm.chargeValue" ng-click="vm.custom = false" required=""><label for="1000"><span>1000 元</span></label></label><label class="radio-inline radio-group"><input id="2000" class="normal-radio ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="radio" name="price" value="2000" ng-model="vm.chargeValue" ng-click="vm.custom = false" required=""><label for="2000"><span>2000 元</span></label></label>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-10 col-sm-offset-2">
+									<label class="radio-inline radio-group"><input id="5000" class="normal-radio ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="radio" name="price" value="5000" ng-model="vm.chargeValue" ng-click="vm.custom = false" required=""><label for="5000"><span>5000 元</span></label></label><label class="radio-inline radio-group" style="margin-left: 7px"><input id="price" class="charge-input" type="radio" name="price" ng-checked="vm.custom" ng-value="vm.chargeValue" ng-click="vm.chargeValue = vm.customValue;" required="" value="500"><label for="price"></label><input type="number" class="form-control input-xs inline-block ng-pristine ng-untouched ng-valid ng-empty ng-valid-min ng-valid-pattern" ng-model="vm.customValue" ng-click="vm.custom = true; vm.chargeValue = vm.customValue;" ng-change="vm.setChargeValue(vm.customValue);" ng-pattern="/^[1-9]\d*$/" min="0"><span>元</span></label>
+								</div>
+							</div>
+							<br>
+							<div class="form-group">
+								<div class="col-sm-10 col-sm-offset-2">
+									<button class="btn btn-confirm" type="submit" ng-disabled="chargeForm.$error.required || value <= 0" ng-click="vm.charge()">立即充值</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="panel-content-line">
+				</div>
+				<h4 class="charge-title">线下汇款</h4>
+				<div class="content clearfix content-charge-box" style="width: 920px;margin: 0 auto">
+					<table class="table table-outline">
+					<thead>
+					<tr>
+						<th>
+							开户名
+						</th>
+						<th class="first-td">
+							开户行
+						</th>
+						<th>
+							账号
+						</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td rowspan="6" style="vertical-align: middle">
+							杭州又拍云科技有限公司
+						</td>
+						<td class="first-td">
+							招商银行杭州武林支行
+						</td>
+						<td>
+							5719 0767 3610 202
+						</td>
+					</tr>
+					<tr>
+						<td>
+							中国建设银行杭州文西支行
+						</td>
+						<td>
+							3300 1616 7810 5995 0652
+						</td>
+					</tr>
+					<tr>
+						<td>
+							中国农业银行杭州竞舟支行
+						</td>
+						<td>
+							1902 0501 0400 10335
+						</td>
+					</tr>
+					<tr>
+						<td>
+							江苏银行股份有限公司杭州西溪小微企业专营支行
+						</td>
+						<td>
+							3323 0188 0000 09460
+						</td>
+					</tr>
+					<tr>
+						<td>
+							杭州银行股份有限公司科技支行
+						</td>
+						<td>
+							3301 0401 6000 1601 163
+						</td>
+					</tr>
+					<tr>
+						<td>
+							中国工商银行杭州高新支行
+						</td>
+						<td>
+							1202 0262 1990 0132 249
+						</td>
+					</tr>
+					</tbody>
+					</table>
+					<br>
+					<div class="well" style="margin-bottom: 64px">
+						<h5>线下汇款处理说明</h5>
+						<p>
+							在转帐或汇款完成后，请您将以下信息，通过邮件发送给 payment@upyun.com 或提供给您的专属销售人员。
+						</p>
+						<p>
+							我们将在 1-2 个工作日内，为您的账号完成充值。
+						</p>
+						<br>
+						<ul class="list-group" style="padding-left: 0">
+							<li>汇款信息：单位名称、汇款银行、汇款账户、汇款金额或直接提供“汇款底单”。</li>
+							<li>又拍云账号信息：账号类型（企业或个人）、又拍云账号名、联系电话。</li>
+						</ul>
+						<br>
+						<p>
+							若充值金额用于短信服务，请在充值时注明。<span style="color: #e02626">短信资源包在购买成功后不支持退款，建议您按需购买。</span>
+						</p>
+						<p>
+							如有疑问，请致电客服 0571-81020203。
+						</p>
+						<br>
+						<p>
+							特别提醒：请企业客户线下汇款时、尽可能通过“公司银行账户”汇款，并确保与开具发票公司名称一致，以便您能更方便地开具发票。
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{/block}

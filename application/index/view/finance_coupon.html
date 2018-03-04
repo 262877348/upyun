@@ -1,0 +1,115 @@
+{extend name="common/base" /}
+{block name="main"}
+	{include file="Finance/top" /}
+
+	<div class="container content content-deal">
+		<div class="panel panel-suffix">
+			<div class="panel-heading no-indent">
+				<div class="panel-title">
+					<span class="pull-right"><a class="btn btn-confirm" ng-click="vm.activateVoucher()">激活代金券</a></span>
+					<div class="pull-right" style="margin-right: 20px">
+						<icon class="icon icon-calender"></icon><input date-range-picker="" class="form-control input-datepicker input-daterange-picker ng-pristine ng-untouched ng-valid ng-empty" type="text" ng-model="vm.dateRange" options="{opens:'left'}">
+					</div>
+					<div class="pull-left">
+						<div class="btn-group dropdown" uib-dropdown="" is-open="status.isopen">
+							<button type="button" class="btn dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">全部<icon class="icon icon-input-down"></icon></button>
+							<ul class="dropdown-menu dropdown-list" role="menu">
+								<!---->
+								<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">全部</a></li>
+								<!---->
+								<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">使用中</a></li>
+								<!---->
+								<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">已用完</a></li>
+								<!---->
+								<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">已过期</a></li>
+								<!---->
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="panel-content-table">
+					<table class="table table-voucher">
+					<thead>
+					<tr>
+						<th>
+							代金券号码
+						</th>
+						<th>
+							面值
+						</th>
+						<th>
+							已用金额
+						</th>
+						<th>
+							余额
+						</th>
+						<th>
+							状态
+						</th>
+						<th>
+							有效期
+						</th>
+					</tr>
+					</thead>
+					<tbody>
+					<!---->
+					<tr ng-repeat="voucher in vm.vouchersData.vouchers">
+						<td>
+							96658478<span class="brand-warning">upyun-probation</span>
+						</td>
+						<td>
+							￥61
+						</td>
+						<td>
+							￥0
+						</td>
+						<td>
+							￥61
+						</td>
+						<td>
+							使用中
+						</td>
+						<td>
+							2018-02-28 至 2018-03-30
+						</td>
+					</tr>
+					<!---->
+					</tbody>
+					</table>
+					<!----><!---->
+					<ul uib-pagination="" boundary-links="true" total-items="vm.vouchersData.pager.count" max-size="5" ng-change="vm.goPage(vm.vouchersData.pager.page)" ng-model="vm.vouchersData.pager.page" class="pagination-sm ng-pristine ng-untouched ng-valid pagination ng-not-empty" previous-text="‹" next-text="›" first-text="«" last-text="»" ng-if="vm.vouchersData.vouchers &amp;&amp; vm.vouchersData.vouchers.length>
+						 0" role="menu"><!---->
+						<li role="menuitem" ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-first disabled"><a href="#" ng-click="selectPage(1, $event)" ng-disabled="noPrevious()||ngDisabled" uib-tabindex-toggle="" disabled="disabled" tabindex="-1">«</a></li>
+						<!---->
+						<!---->
+						<li role="menuitem" ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-prev disabled"><a href="#" ng-click="selectPage(page - 1, $event)" ng-disabled="noPrevious()||ngDisabled" uib-tabindex-toggle="" disabled="disabled" tabindex="-1">‹</a></li>
+						<!---->
+						<!---->
+						<li role="menuitem" ng-repeat="page in pages track by $index" ng-class="{active: page.active,disabled: ngDisabled&amp;&amp;!page.active}" class="pagination-page active"><a href="#" ng-click="selectPage(page.number, $event)" ng-disabled="ngDisabled&amp;&amp;!page.active" uib-tabindex-toggle="">1</a></li>
+						<!---->
+						<!---->
+						<li role="menuitem" ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pagination-next disabled"><a href="#" ng-click="selectPage(page + 1, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle="" disabled="disabled" tabindex="-1">›</a></li>
+						<!---->
+						<!---->
+						<li role="menuitem" ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pagination-last disabled"><a href="#" ng-click="selectPage(totalPages, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle="" disabled="disabled" tabindex="-1">»</a></li>
+						<!---->
+					</ul>
+					<!---->
+				</div>
+				<div class="panel-helper panel-helper-fix-margin">
+					<helperheading ng-init="status.open = false"><helperbtn ng-click="status.open = status.open == 'help' ? false : 'help'" ng-class="{'open': status.open === 'help'}">Help<helperbtnarrow></helperbtnarrow></helperbtn></helperheading><helperbody><helpercontent ng-class="{'open': status.open === 'help'}">
+					<h4>代金券使用说明：</h4>
+					<ul class="list-group">
+						<li>代金券使用相当于充值现金，进行服务费用自动抵扣；</li>
+						<li>不同市场活动的代金券可以叠加使用；</li>
+						<li>代金券激活后，必须在有效期使用；</li>
+						<li>账单扣费优先级，先用代金券，再扣现金余额。</li>
+					</ul>
+					</helpercontent></helperbody>
+				</div>
+			</div>
+		</div>
+	</div>
+{/block}

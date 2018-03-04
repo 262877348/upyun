@@ -1,0 +1,71 @@
+{extend name="common/base" /}
+{block name="main"}
+	{include file="Account/top" /}
+
+	<div class="container content content-account clearfix">
+		<div class="panel">
+			<div class="panel-body">
+				<div class="panel-content">
+					<h4 class="account-label-icon">登录密码<icon class="icon icon-ok"></icon></h4>
+					<p>
+						安全性高的密码可以使账号更安全。
+					</p>
+					<p>
+						设置一个包含字母，符号或数字中至少两项且长度超过 8 位的密码。
+					</p>
+				</div>
+				<div class="panel-sidebar" style="right: 49px">
+					<button class="btn btn-confirm" ng-click="vm.editPwd()">修改</button>
+				</div>
+			</div>
+		</div>
+		<div class="panel">
+			<div class="panel-body">
+				<div class="panel-content">
+					<h4 class="account-label-icon">邮箱验证<icon class="icon icon-ok" ng-class="{'icon-ok': vm.user.email_status &amp;&amp; vm.user.email, 'icon-not-ok': !vm.user.email_status &amp;&amp; vm.user.email}"></icon></h4>
+					<span class="pane-content-small-text">您的邮箱：myzy@22058.com</span><br>
+					<br>
+					<!----><!---->
+					<div ng-if="vm.user.email_status &amp;&amp; vm.user.email">
+						<h4>您的绑定邮箱可用于</h4>
+						<ul class="row-inline">
+							<li>安全管理，密码重置找回</li>
+							<li>账号使用，邮箱快捷登陆</li>
+							<li>服务通知，域名审核反馈</li>
+						</ul>
+					</div>
+					<!---->
+				</div>
+				<div class="panel-sidebar" style="right: 49px">
+					<button class="btn btn-confirm ng-hide" ng-show="!vm.user.email_status &amp;&amp; vm.user.email" ng-click="vm.verifyEmail()">验证</button><br>
+					<br>
+					<button class="btn btn-confirm" ng-click="vm.editEmail()">修改</button>
+				</div>
+			</div>
+		</div>
+		<div class="panel">
+			<div class="panel-body">
+				<div class="panel-content panel-content-fix-bottom">
+					<h4 class="account-label-icon">手机验证<icon class="icon icon-ok" ng-class="{'icon-ok': vm.user.mobile_status &amp;&amp; vm.user.mobile, 'icon-not-ok': !vm.user.mobile_status &amp;&amp; vm.user.mobile}"></icon></h4>
+					<span class="pane-content-small-text">您的手机：155****2244</span><br>
+					<br>
+					<!----><!---->
+					<div ng-if="vm.user.mobile_status &amp;&amp; vm.user.mobile">
+						<h4>您的绑定手机号可用于</h4>
+						<ul class="row-inline">
+							<li>安全管理，密码重置找回</li>
+							<li>账号使用，手机快捷登陆</li>
+							<li>服务通知，余额不足提醒，账户欠费提醒</li>
+						</ul>
+					</div>
+					<!---->
+				</div>
+				<div class="panel-sidebar" style="right: 49px">
+					<button class="btn btn-confirm ng-hide" ng-click="vm.verifyMobile()" ng-show="!vm.user.mobile_status &amp;&amp; vm.user.mobile">验证</button><br>
+					<br>
+					<button class="btn btn-confirm" ng-click="vm.editMobile()">修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{/block}

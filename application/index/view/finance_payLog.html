@@ -1,0 +1,59 @@
+{extend name="common/base" /}
+{block name="main"}
+	{include file="Finance/top" /}
+
+	<div class="container content content-deal-history clearfix">
+		<div class="panel">
+			<div class="panel-heading no-indent">
+				<div class="panel-title">
+					<span class="pull-right"><a href="#" class="btn btn-confirm">立即充值</a></span><span class="pull-right" style="margin-right: 20px"><icon class="icon icon-calender"></icon><input date-range-picker="" class="form-control input-datepicker input-daterange-picker ng-pristine ng-untouched ng-valid ng-empty ng-valid-max" type="text" ng-model="vm.dateRange" max="vm.today" options="{opens:'left', autoUpdateInput:false}"></span>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="panel-content-table">
+					<table class="table">
+					<thead>
+					<tr>
+						<th>
+							充值编号
+						</th>
+						<th>
+							充值时间
+						</th>
+						<th>
+							充值金额
+						</th>
+					</tr>
+					</thead>
+					<tbody>
+					<!---->
+					<tr ng-repeat="order in vm.ordersData.orders">
+						<td>
+							201803040923289241
+						</td>
+						<td>
+							2018-03-04 09:24:21
+						</td>
+						<!----><!---->
+						<td ng-if="!order.hasContent">
+							5 元 <!---->
+						</td>
+						<!---->
+					</tr>
+					<!---->
+					</tbody>
+					</table>
+					<!----><!---->
+					<div class="sr-wrap-pag" ng-if="vm.ordersData.orders &amp;&amp; vm.ordersData.orders.length>
+						 0">
+						<ul class="pagination pull-right">
+							<li ng-class="{ disabled: !vm.ordersData.pager.since}" class="disabled"><a ng-click="vm.goPrev()"><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+							<li ng-class="{ disabled: !vm.ordersData.pager.max}" class="disabled"><a ng-click="vm.goNext()"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+						</ul>
+					</div>
+					<!---->
+				</div>
+			</div>
+		</div>
+	</div>
+{/block}

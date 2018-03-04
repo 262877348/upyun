@@ -1,0 +1,70 @@
+{extend name="common/base" /}
+{block name="main"}
+	{include file="Account/top" /}
+
+	<div class="content content-account-operators clearfix container">
+		<div class="panel">
+			<div class="panel-heading">
+				<div class="panel-title">
+					<h4 class="pull-left operators-title">操作员列表</h4>
+					<a class="btn btn-confirm operators-btn pull-right">添加操作员</a>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="panel-content-table">
+					<table class="table table-operator">
+					<thead>
+					<tr>
+						<th>
+							操作员
+						</th>
+						<th>
+							备注
+						</th>
+						<th>
+							状态
+						</th>
+						<th>
+							授权
+						</th>
+						<th>
+							操作
+						</th>
+					</tr>
+					</thead>
+					<tbody>
+					<!--bindings={
+					  	"ng-reflect-ng-for-of": "[object Object]"
+					}-->
+					<tr>
+						<td>
+							zhujinkui
+						</td>
+						<td>
+							zhujinkui
+						</td>
+						<td>
+							<icon class="icon status-normal"></icon><statusname>正常</statusname>
+						</td>
+						<td>
+							<a class="table-operate" href="#"><icon class="icon operate-manage"></icon><operatename>管理</operatename></a>
+						</td>
+						<td>
+							<a class="table-operate" href="#"><icon class="icon operate-edit"></icon><operatename>编辑</operatename></a><!--bindings={
+							 	 "ng-reflect-ng-if": "true"
+							}--><a class="table-operate" href="#"><icon class="icon operate-disable"></icon><operatename>禁用</operatename></a><a class="table-operate" href="#"><icon class="icon operate-delete"></icon><operatename>删除</operatename></a>
+						</td>
+					</tr>
+					<!--bindings={
+					  	"ng-reflect-ng-for-of": ""
+					}-->
+					</tbody>
+					</table>
+					<!--bindings={
+					  	"ng-reflect-ng-if": "false"
+					}-->
+				</div>
+			</div>
+		</div>
+	</div>
+{/block}

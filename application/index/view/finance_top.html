@@ -1,0 +1,26 @@
+<div class="container" ng-include="'app/' + $state.current.name.split('.')[0] + '/views/_secondary.html'">
+	<div class="panel panel-suffix panel-fix-suffix content-charge" style="margin-bottom: 0px" ng-controller="secondCtrl">
+		<div class="panel-heading no-indent">
+			<div class="panel-title">
+				<headline>费用中心</headline>
+			</div>
+		</div>
+		<div class="panel-body">
+			<accountusage><usageitem class="usageitem-behand"><usagetitle>账户余额</usagetitle><br>
+			<usagevalue><span>0<usagedecimal ng-show="upai.usage.money_decimal" class="ng-hide">.</usagedecimal><usageunit>&nbsp;元</usageunit></span></usagevalue></usageitem><seperateline></seperateline><usageitem class="usageitem-center"><usagetitle>代金券剩余</usagetitle><br>
+			<usagevalue><span>1<usageunit>&nbsp;张</usageunit></span></usagevalue></usageitem><seperateline></seperateline><usageitem class="usageitem-behand"><usagetitle>剩余资源</usagetitle><br>
+			<usagevalue><span>0.000<usageunit>&nbsp;B</usageunit></span></usagevalue></usageitem></accountusage>
+			<div class="sub-nav">
+				<ul>
+					<li ng-class="{ active: $state.includes('billing.charge') }" class="active"><a href="{:url('Finance/index')}">账户充值</a></li>
+					<li ng-class="{ active: $state.includes('billing.history') }"><a href="{:url('Finance/payLog')}">充值记录</a></li>
+					<li ng-class="{ active: $state.includes('billing.bills') || $state.includes('billing.bills_detail') }"><a href="{:url('Finance/bill')}">账单管理</a></li>
+					<li ng-class="{ active: $state.includes('billing.voucher') }"><a href="{:url('Finance/coupon')}">代金券管理</a></li>
+					<li ng-class="{ active: $state.includes('billing.resource') }"><a href="#">流量包管理</a></li>
+					<li ng-class="{ active: $state.includes('billing.sms') }"><a href="#">短信包管理</a></li>
+					<li ng-class="{ active: $state.includes('billing.invoicing')}"><a href="{:url('Finance/invoice')}">发票管理</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

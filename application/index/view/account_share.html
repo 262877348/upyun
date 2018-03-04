@@ -1,0 +1,108 @@
+{extend name="common/base" /}
+{block name="main"}
+	{include file="Account/top" /}
+
+	<div class="container content content-account-recommendation clearfix">
+		<!-- 推荐奖励机制 -->
+		<div class="panel recommendation-rule">
+			<div class="panel-body">
+				<div class="panel-content">
+					<h4>推荐奖励机制</h4>
+					<div class="clearfix">
+						<ul class="list-group">
+							推荐奖励
+							<li class="list-style-sm">注册奖励：好友注册并完成认证，奖励 30GB 国内 CDN 流量包。</li>
+							<li class="list-style-sm">充值奖励：好友完成首次充值后，奖励充值金额 5% 代金券。<i class="glyphicon glyphicon-question-sign icon-blue" tooltip-placement="right" tooltip-append-to-body="true" tooltip-class="upTooltip" uib-tooltip="单笔充值赠送上限 200 元"></i></li>
+						</ul>
+						<ul class="list-group">
+							好友奖励
+							<li class="list-style-sm">注册奖励：注册并完成认证，赠送 61 元免费代金券。</li>
+							<li class="list-style-sm">充值奖励：首次充值后，奖励充值金额 10% 代金券。</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 邀请方式 -->
+		<div class="panel recommendation-methods">
+			<div class="panel-body">
+				<div class="panel-content">
+					<h4>好友邀请</h4>
+					<div class="btn-group">
+						<button class="btn btn-confirm" ng-click="vm.sendLink()">链接邀请</button><button class="btn btn-confirm margin-left-15" ng-click="vm.sendEmail()">邮件发送</button><button class="btn btn-confirm margin-left-15" ng-click="vm.sendSms()">短信发送</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 推荐记录 -->
+		<div class="panel recommendation-records">
+			<div class="panel-body">
+				<div class="panel-content">
+					<h4>推荐记录</h4>
+					<table class="table table-recommendation">
+					<thead>
+					<tr>
+						<th>
+							注册时间
+						</th>
+						<th>
+							账号
+						</th>
+						<th>
+							姓名
+						</th>
+						<th>
+							认证状态
+						</th>
+					</tr>
+					</thead>
+					<tbody>
+					<!----><!---->
+					<tr ng-if="vm.inviteList.length === 0">
+						<td colspan="4" class="no-record no-table-hover">
+						</td>
+					</tr>
+					<!---->
+					</tbody>
+					</table>
+					<div class="pagination-box clearfix">
+						<span class="brief-info">显示 0 条记录，共 0 条</span>
+						<ul uib-pagination="" boundary-links="true" boundary-link-numbers="true" total-items="vm.total" ng-model="vm.currentPage" max-size="5" items-per-page="20" class="pagination-sm ng-pristine ng-untouched ng-valid pagination ng-not-empty" ng-change="vm.gotoPage()" previous-text="‹" next-text="›" first-text="«" last-text="»" role="menu">
+							<!---->
+							<li role="menuitem" ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-first disabled"><a href="#" ng-click="selectPage(1, $event)" ng-disabled="noPrevious()||ngDisabled" uib-tabindex-toggle="" disabled="disabled" tabindex="-1">«</a></li>
+							<!---->
+							<!---->
+							<li role="menuitem" ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-prev disabled"><a href="#" ng-click="selectPage(page - 1, $event)" ng-disabled="noPrevious()||ngDisabled" uib-tabindex-toggle="" disabled="disabled" tabindex="-1">‹</a></li>
+							<!---->
+							<!---->
+							<li role="menuitem" ng-repeat="page in pages track by $index" ng-class="{active: page.active,disabled: ngDisabled&amp;&amp;!page.active}" class="pagination-page active"><a href="#" ng-click="selectPage(page.number, $event)" ng-disabled="ngDisabled&amp;&amp;!page.active" uib-tabindex-toggle="">1</a></li>
+							<!---->
+							<!---->
+							<li role="menuitem" ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pagination-next disabled"><a href="#" ng-click="selectPage(page + 1, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle="" disabled="disabled" tabindex="-1">›</a></li>
+							<!---->
+							<!---->
+							<li role="menuitem" ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pagination-last disabled"><a href="#" ng-click="selectPage(totalPages, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle="" disabled="disabled" tabindex="-1">»</a></li>
+							<!---->
+						</ul>
+					</div>
+				</div>
+				<div class="panel-helper">
+					<helperheading ng-init="status_recommendation.open = false"><helperbtn ng-click="status_recommendation.open = status_recommendation.open == 'help' ? false : 'help'" ng-class="{'open': status_recommendation.open === 'help'}">Help<helperbtnarrow></helperbtnarrow></helperbtn></helperheading><helperbody><helpercontent ng-class="{'open': status_recommendation.open === 'help'}">
+					<h4>推荐好友规则说明：</h4>
+					<ul class="list-group">
+						<li>推荐的好友通过链接完成注册及实名认证，即为推荐成功，您即可获得 30GB 国内 CDN 流量包，流量包有效期为 3 个月。</li>
+						<li>充值赠送仅针对好友在完成注册 90 天内首次充值生效，好友充值金额的 5% 将以代金券的形式赠送到您的账户。</li>
+						<li>单个推荐好友赠送代金券金额上限为 200 元，代金券有效期 365 天。</li>
+						<li>您推荐的好友在完成注册的 90 天内完成首充，就可获得 10% 优惠，逾期则首充优惠无效。</li>
+						<li>拥有相同账户、邮箱、手机号、支付账户、银行卡的用户视为同一用户（适用于您和您推荐的好友）。</li>
+						<li>此活动为长期活动，又拍云有权限做一定的规则修改。规则修改会提前通知。</li>
+						<p>
+							活动的解释权归又拍云官方所有。
+						</p>
+					</ul>
+					</helpercontent></helperbody>
+				</div>
+			</div>
+		</div>
+	</div>
+{/block}

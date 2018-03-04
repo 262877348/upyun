@@ -1,0 +1,338 @@
+{extend name="common/base" /}
+{block name="main"}
+	<div class="container content content-account content-operator-log clearfix">
+		<div class="panel">
+			<div class="panel-heading no-indent">
+				<div class="panel-title">
+					<headline>操作日志</headline>
+				</div>
+			</div>
+			<div class="panel-heading no-indent">
+				<div class="btn-group drop dropdown" uib-dropdown="" is-open="status.isopen" style="margin-left: 26px">
+					<button type="button" class="btn dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">全部<icon class="icon icon-input-down"></icon></button>
+					<ul class="dropdown-menu dropdown-list" role="menu">
+						<!---->
+						<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">全部</a></li>
+						<!---->
+						<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">登录</a></li>
+						<!---->
+						<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">账号</a></li>
+						<!---->
+						<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">服务</a></li>
+						<!---->
+						<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">操作员</a></li>
+						<!---->
+						<li role="menuitem" class="dropdown-list-item pointer" ng-repeat="(key, value) in vm.typeMap"><a ng-click="vm.change(key)">文件</a></li>
+						<!---->
+					</ul>
+				</div>
+				<input type="text" class="form-control input-search ng-pristine ng-untouched ng-valid ng-empty ng-hide" ng-show="vm.showTag" placeholder="输入服务名称进行检索" ng-model="vm.bucket_name" ng-focus="vm.searchService()" ng-blur="vm.clearSearch()"><span class="up-icon icon-search ng-hide" style="margin-top: 10px" ng-show="vm.showTag"></span>
+				<div class="pull-right" style="position: relative;right: 25px">
+					<icon class="icon icon-calender"></icon><input date-range-picker="" class="form-control input-datepicker input-daterange-picker ng-pristine ng-untouched ng-valid ng-empty" type="text" value="" ng-model="vm.dateRange" options="{opens:'left'}">
+				</div>
+			</div>
+			<div class="panel-body panel-padding" style="margin-top: 21px">
+				<table class="table">
+				<thead>
+				<tr>
+					<th>
+						操作时间
+					</th>
+					<th>
+						操作类型
+					</th>
+					<th>
+						详细描述
+					</th>
+					<th>
+						操作 IP 记录
+					</th>
+				</tr>
+				</thead>
+				<tbody>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-03-04 09:24:33
+					</td>
+					<td>
+						账号
+					</td>
+					<td class="table-log-fix-width">
+						充值成功: 5
+					</td>
+					<td>
+						111.194.21.77
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-03-04 09:24:21
+					</td>
+					<td>
+						账号
+					</td>
+					<td class="table-log-fix-width">
+						充值成功: 5
+					</td>
+					<td>
+						110.75.242.164
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-03-04 09:23:28
+					</td>
+					<td>
+						账号
+					</td>
+					<td class="table-log-fix-width">
+						创建充值订单: 201803040923289241
+					</td>
+					<td>
+						111.194.21.77
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-03-04 00:52:16
+					</td>
+					<td>
+						登录
+					</td>
+					<td class="table-log-fix-width">
+						登陆成功
+					</td>
+					<td>
+						111.194.21.77
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-03-04 00:40:41
+					</td>
+					<td>
+						账号
+					</td>
+					<td class="table-log-fix-width">
+						重置密码
+					</td>
+					<td>
+						111.194.21.77
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-02-28 15:06:35
+					</td>
+					<td>
+						操作员
+					</td>
+					<td class="table-log-fix-width">
+						给服务：myzy-images 授权操作员 zhujinkui
+					</td>
+					<td>
+						111.194.18.124
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-02-28 14:42:59
+					</td>
+					<td>
+						登录
+					</td>
+					<td class="table-log-fix-width">
+						登陆成功
+					</td>
+					<td>
+						111.194.18.124
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-02-27 21:29:03
+					</td>
+					<td>
+						服务
+					</td>
+					<td class="table-log-fix-width">
+						设置服务：myzy-images 的外链状态为：true
+					</td>
+					<td>
+						111.192.187.144
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-02-27 21:28:29
+					</td>
+					<td>
+						操作员
+					</td>
+					<td class="table-log-fix-width">
+						创建操作员: zhujinkui (zhujinkui)
+					</td>
+					<td>
+						111.192.187.144
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-02-27 21:25:43
+					</td>
+					<td>
+						服务
+					</td>
+					<td class="table-log-fix-width">
+						给服务：myzy-images 绑定域名：images.22058.com
+					</td>
+					<td>
+						111.192.187.144
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-02-27 21:25:10
+					</td>
+					<td>
+						服务
+					</td>
+					<td class="table-log-fix-width">
+						设置服务：myzy-images 的外链状态为：true
+					</td>
+					<td>
+						111.192.187.144
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-02-27 21:24:15
+					</td>
+					<td>
+						服务
+					</td>
+					<td class="table-log-fix-width">
+						设置服务：myzy-images 的外链状态为：true
+					</td>
+					<td>
+						111.192.187.144
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-02-27 21:18:04
+					</td>
+					<td>
+						服务
+					</td>
+					<td class="table-log-fix-width">
+						服务: myzy-images 关闭 css 压缩;关闭 js 压缩;开启 html 压缩
+					</td>
+					<td>
+						111.192.187.144
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-02-27 21:17:15
+					</td>
+					<td>
+						服务
+					</td>
+					<td class="table-log-fix-width">
+						创建服务：myzy-images
+					</td>
+					<td>
+						111.192.187.144
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-02-27 21:15:57
+					</td>
+					<td>
+						账号
+					</td>
+					<td class="table-log-fix-width">
+						实名认证操作，认证：提交认证信息.
+					</td>
+					<td>
+						111.192.187.144
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-02-27 21:15:53
+					</td>
+					<td>
+						账号
+					</td>
+					<td class="table-log-fix-width">
+						修改账号信息
+					</td>
+					<td>
+						111.192.187.144
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-02-27 21:13:22
+					</td>
+					<td>
+						登录
+					</td>
+					<td class="table-log-fix-width">
+						登陆成功
+					</td>
+					<td>
+						111.192.187.144
+					</td>
+				</tr>
+				<!---->
+				<tr ng-repeat="log in vm.logs">
+					<td>
+						2018-02-27 21:12:15
+					</td>
+					<td>
+						账号
+					</td>
+					<td class="table-log-fix-width">
+						验证邮箱地址
+					</td>
+					<td>
+						111.192.187.144
+					</td>
+				</tr>
+				<!---->
+				</tbody>
+				</table>
+				<!----><!---->
+				<div class="sr-wrap-pag" ng-if="vm.logs &amp;&amp; vm.logs.length>
+					 0">
+					<ul class="pagination pull-right">
+						<li ng-class="{ disabled: !vm.pager.since}" class="disabled"><a ng-click="vm.goPrev()"><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+						<li ng-class="{ disabled: !vm.pager.max}" class="disabled"><a ng-click="vm.goNext()"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+					</ul>
+				</div>
+				<!---->
+			</div>
+		</div>
+	</div>
+{/block}

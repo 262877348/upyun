@@ -1,0 +1,295 @@
+{extend name="common/base" /}
+{block name="main"}
+	{include file="Account/top" /}
+
+	<div class="container content content-account clearfix">
+		<div class="panel">
+			<div class="panel-body">
+				<div class="panel-content certificate panel-no-border-right" ng-class="{'panel-no-border-right': vm.certificate.status != 'wait'}">
+					<h4 class="account-label-icon">实名认证<icon class="icon icon-ok" ng-class="vm.user.verify_status === 'yes' ? 'icon-ok' : 'icon-not-ok'"></icon></h4>
+					<p ng-show="vm.certificate.status == 'no' || vm.certificate.status == 'ignore'" class="ng-hide">
+						您还未进行账号实名认证，将影响你服务正常使用
+					</p>
+					<p ng-show="vm.certificate.status == 'need'" class="ng-hide">
+						您的账号实名认证申请 “需修改”，请尽快提交真实信息完成认证
+					</p>
+					<p ng-show="vm.certificate.status == 'yes'" class="">
+						您的账号已完成实名认证
+					</p>
+					<p ng-show="vm.certificate.status == 'wait'" class="ng-hide">
+						您的账号实名认证申请 “待审核” 中，又小拍将于1个工作日处理完成
+					</p>
+					<p ng-show="vm.certificate.status == 'refuse'" class="ng-hide">
+						您的账号实名认证申请 “审核拒绝”，请提交真实信息完成认证。
+					</p>
+					<p ng-show="vm.certificate.status == 'refuse'" class="auto-wrap ng-hide">
+						拒绝原因：
+					</p>
+					<p ng-show="vm.certificate.status == 'need'" class="auto-wrap ng-hide">
+						审核反馈：
+					</p>
+					<p ng-show="vm.certificate.status != 'wait' &amp;&amp; vm.certificate.status != 'no' &amp;&amp; vm.certificate.status != 'ignore'">
+						认证方式： 企业审核认证
+					</p>
+					<p ng-show="vm.certificate.status == 'yes'" class="">
+						认证时间：2018-02-28 08:42:40
+					</p>
+				</div>
+				<div class="panel-sidebar panel-fix-sidebar" ng-show="vm.certificate.status != 'wait'">
+					<div>
+						<button class="btn btn-confirm" ng-click="vm.verifyRealname(vm.user.account_type)"><a href="{:url('Account/card')}">实名认证</a></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-person-message">
+			<div class="panel-body">
+				<div class="panel-content">
+					<form class="form-horizontal ng-pristine ng-valid-pattern ng-valid-url ng-valid-maxlength ng-valid ng-valid-required ng-valid-minlength" role="form" name="generalInfoForm" ng-init="vm.setFormScope(this)" ng-submit="vm.submitGeneral()">
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-left"><i class="required-mark">*</i>用户名</label>
+							<div class="col-sm-8">
+								<p class="form-control-static">
+									mingyangzhiyuan
+								</p>
+							</div>
+						</div>
+						<!--所属行业-->
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-left"><i class="required-mark">*</i>所属行业</label>
+							<div class="col-sm-8">
+								<div class="btn-group dropdown" uib-dropdown="" is-open="status1.isopen">
+									<button type="button" class="btn dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">其他<icon class="icon icon-input-down"></icon></button>
+									<ul class="dropdown-menu dropdown-list" role="menu" style="width: 180px">
+										<li class="dropdown-list-item pointer"><a ng-click="vm.updateIndustry('')">请选择</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="category in vm.categories"><a ng-click="vm.updateIndustry(category.name)">移动应用</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="category in vm.categories"><a ng-click="vm.updateIndustry(category.name)">门户网站</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="category in vm.categories"><a ng-click="vm.updateIndustry(category.name)">行业服务</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="category in vm.categories"><a ng-click="vm.updateIndustry(category.name)">电子商务</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="category in vm.categories"><a ng-click="vm.updateIndustry(category.name)">音视频</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="category in vm.categories"><a ng-click="vm.updateIndustry(category.name)">游戏领域</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="category in vm.categories"><a ng-click="vm.updateIndustry(category.name)">其他</a></li>
+										<!---->
+									</ul>
+								</div>
+								<div class="btn-group dropdown ng-hide" uib-dropdown="" is-open="status2.isopen" ng-hide="vm.user.category != null &amp;&amp; vm.industries == ''">
+									<button type="button" class="btn dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">请选择<icon class="icon icon-input-down"></icon></button>
+									<ul class="dropdown-menu dropdown-list" role="menu" style="width: 180px">
+										<li class="dropdown-list-item pointer"><a ng-click="vm.updateIndustriesState('')">请选择</a></li>
+										<!---->
+									</ul>
+								</div>
+								<div class="help-block help-block-error ng-hide" ng-show="!vm.showCateGoryTip || !vm.showIndustryTip">
+									<!---->
+								</div>
+							</div>
+						</div>
+						<!--账户类型-->
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-left"><i class="required-mark">*</i>账户类型</label>
+							<div class="col-sm-8">
+								<p class="form-control-static">
+									公司
+								</p>
+							</div>
+						</div>
+						<!--网站/产品-->
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-left"><i class="required-mark">*</i>网站/产品</label>
+							<div class="col-sm-8">
+								<input type="text" name="production_name" class="form-control ng-pristine ng-untouched ng-valid-pattern ng-not-empty ng-valid ng-valid-required" ng-model="vm.user.production_name" ng-pattern="/^[\u4e00-\u9fa5a-zA-Z0-9]{1,50}$/" placeholder=" 请输入经营网站或产品app名称" required="" up-focus=""><!---->
+							</div>
+						</div>
+						<!--网站地址-->
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-left" style="padding-left: 24px">网站地址</label>
+							<div class="col-sm-8">
+								<input type="url" name="website" class="form-control ng-pristine ng-untouched ng-valid ng-valid-url ng-valid-pattern ng-not-empty" ng-model="vm.user.website" ng-pattern="/(https?:\/\/){0,1}([A-z0-9]+[_\-]?[A-z0-9]+\.)*[A-z0-9]+\-?[A-z0-9]+\.[A-z]{2,}(\/.*)*\/?/" up-focus="">
+								<div class="help-block help-block-error ng-hide" ng-show="generalInfoForm.website.$dirty &amp;&amp; generalInfoForm.website.$invalid">
+									<span ng-show="generalInfoForm.website.$invalid" class="ng-hide">请输入合法的 URL，包括"http://"</span>
+								</div>
+							</div>
+						</div>
+						<!--公司名-->
+						<div class="form-group" ng-show="vm.user.account_type == 'company'">
+							<label class="col-sm-3 control-label text-left"><i class="required-mark">*</i>公司名</label>
+							<div class="col-sm-8 ng-hide" ng-show="vm.certificate.status !== 'yes' &amp;&amp; vm.certificate.status !== 'ignore'">
+								<input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-valid-required ng-not-empty" name="corp" ng-model="vm.user.company_name" ng-required="vm.user.account_type == 'company'" up-focus="" required="required"><!---->
+								<div class="help-block help-block-error ng-inactive ng-hide" ng-messages="generalInfoForm.corp.$error" ng-show="generalInfoForm.corp.$dirty &amp;&amp; generalInfoForm.corp.$invalid" ng-class="{'no-margin': generalInfoForm.corp.$dirty}">
+									<!----><!---->
+								</div>
+							</div>
+							<div class="col-sm-8" ng-show="vm.certificate.status === 'yes' || vm.certificate.status === 'ignore'">
+								<p class="form-control-static">
+									北京铭扬致远科技有限公司
+								</p>
+							</div>
+						</div>
+						<!--联系人-->
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-left"><i class="required-mark">*</i>联系人</label><!---->
+							<div class="col-sm-8" ng-if="vm.user.account_type === 'company'">
+								<input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required ng-valid-pattern ng-valid-minlength ng-valid-maxlength" name="realname" ng-model="vm.user.realname" ng-pattern="/^[\u4e00-\u9fa5]*$|^[a-zA-Z ]*$/" ng-minlength="2" ng-maxlength="10" required="" up-focus="">
+								<div class="help-block ng-hide no-margin" ng-show="!generalInfoForm.realname.$dirty &amp;&amp; generalInfoForm.realname.$focused" ng-class="{'no-margin': !generalInfoForm.realname.$dirty}">
+									<translate>请输入您的姓名</translate>
+								</div>
+								<div class="help-block help-block-error ng-inactive ng-hide" ng-messages="generalInfoForm.realname.$error" ng-show="generalInfoForm.realname.$dirty &amp;&amp; generalInfoForm.realname.$invalid" ng-class="{'no-margin': generalInfoForm.realname.$dirty}">
+									<!----><!----><!---->
+								</div>
+							</div>
+							<!----><!----><!---->
+						</div>
+						<!--所在区域-->
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-left"><i class="required-mark">*</i>所在区域</label>
+							<div class="col-sm-8">
+								<div class="btn-group btn-selected dropdown" uib-dropdown="" is-open="status3.isopen">
+									<button type="button" class="btn dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">北京市<icon class="icon icon-input-down"></icon></button>
+									<ul class="dropdown-menu dropdown-list" role="menu" style="width: 180px; overflow-x: auto">
+										<li class="dropdown-list-item pointer"><a ng-click="vm.updateCity('')">请选择</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">北京市</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">天津市</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">河北省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">山西省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">内蒙古自治区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">辽宁省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">吉林省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">黑龙江省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">上海市</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">江苏省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">浙江省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">安徽省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">福建省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">江西省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">山东省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">河南省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">湖北省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">湖南省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">广东省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">广西壮族自治区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">海南省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">重庆市</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">四川省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">贵州省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">云南省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">西藏自治区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">陕西省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">甘肃省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">青海省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">宁夏回族自治区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">新疆维吾尔自治区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">台湾省</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">香港特别行政区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">澳门特别行政区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="province in vm.provinces"><a ng-click="vm.updateCity(province.id)">海外</a></li>
+										<!---->
+									</ul>
+								</div>
+								<div class="btn-group btn-selected dropdown" uib-dropdown="" is-open="status4.isopen" ng-hide="vm.user.province != null &amp;&amp; vm.citys.length == 0">
+									<button type="button" class="btn dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">请选择<icon class="icon icon-input-down"></icon></button>
+									<ul class="dropdown-menu dropdown-list" role="menu" style="width: 180px; overflow-x: auto">
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">东城区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">西城区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">朝阳区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">丰台区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">石景山区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">海淀区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">门头沟区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">房山区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">通州区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">顺义区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">昌平区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">大兴区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">怀柔区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">平谷区</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">密云县</a></li>
+										<!---->
+										<li class="dropdown-list-item pointer" ng-repeat="city in vm.citys"><a ng-click="vm.updateCityState(city.id)">延庆县</a></li>
+										<!---->
+									</ul>
+								</div>
+								<div class="help-block help-block-error ng-hide" ng-show="!vm.showProvinceTip || !vm.showCityTip">
+									<!---->
+								</div>
+							</div>
+						</div>
+						<!--详细地址-->
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-left" style="padding-left: 24px">详细地址</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="vm.user.address">
+							</div>
+						</div>
+						<!--QQ/MSN-->
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-left" style="padding-left: 24px">QQ/MSN</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength" ng-model="vm.user.im" ng-maxlength="254">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="panel-sidebar" style="right: 32px">
+					<button type="button" class="btn btn-confirm ladda-button" data-style="expand-right" ng-click="vm.submitGeneral($event)">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{/block}

@@ -1,0 +1,134 @@
+{extend name="common/base" /}
+{block name="main"}
+	{include file="Finance/top" /}
+
+	<div class="container content content-deal-buy">
+		<div class="panel">
+			<div class="panel-heading no-indent">
+				<div class="input-group">
+					<div class="btn-group" role="group">
+						<button type="button" class="btn ng-pristine ng-untouched ng-valid active ng-not-empty btn-confirm" ng-model="vm.billSpecies" uib-btn-radio="'dayBills'" ng-class="{'btn-confirm': vm.billSpecies == 'dayBills', 'btn-cancel': vm.billSpecies != 'dayBills'}">日账单</button><button type="button" class="btn ng-pristine ng-untouched ng-valid ng-not-empty btn-cancel" ng-model="vm.billSpecies" uib-btn-radio="'monthBills'" ng-class="{'btn-confirm': vm.billSpecies == 'monthBills', 'btn-cancel': vm.billSpecies != 'monthBills'}">月账单</button>
+					</div>
+				</div>
+				<!---->
+				<div class="pull-right" ng-if="vm.billSpecies == 'dayBills'">
+					<div class="tab-heading">
+						<span class="pull-right"><icon class="icon icon-calender"></icon><input date-range-picker="" class="form-control input-datepicker input-daterange-picker ng-pristine ng-untouched ng-valid ng-empty ng-valid-max" type="text" ng-model="vm.dateRange" max="vm.today" options="{opens:'left'}"></span>
+					</div>
+				</div>
+				<!---->
+			</div>
+			<!---->
+			<div class="panel-body" ng-if="vm.billSpecies == 'dayBills'">
+				<div class="panel-content-table" style="padding-bottom: 30px">
+					<table class="table table-bills loading-wrap">
+					<thead>
+					<tr>
+						<th>
+							账单编号
+						</th>
+						<th>
+							出账时间
+						</th>
+						<th>
+							账单金额
+						</th>
+						<th>
+							实付金额
+						</th>
+						<th>
+							操作
+						</th>
+					</tr>
+					</thead>
+					<tbody>
+					<!----><!---->
+					<tr ng-repeat="bill in vm.billsData.bills">
+						<td>
+							20180303230633909912
+						</td>
+						<td>
+							2018-03-03
+						</td>
+						<td>
+							0 元
+						</td>
+						<td>
+							0 元
+						</td>
+						<td>
+							<a href="#" class="table-operate"><icon class="icon operate-view"></icon><operatename>查看</operatename></a>
+						</td>
+					</tr>
+					<!---->
+					<tr ng-repeat="bill in vm.billsData.bills">
+						<td>
+							20180302201490954612
+						</td>
+						<td>
+							2018-03-02
+						</td>
+						<td>
+							0 元
+						</td>
+						<td>
+							0 元
+						</td>
+						<td>
+							<a href="#" class="table-operate"><icon class="icon operate-view"></icon><operatename>查看</operatename></a>
+						</td>
+					</tr>
+					<!---->
+					<tr ng-repeat="bill in vm.billsData.bills">
+						<td>
+							20180301561737885212
+						</td>
+						<td>
+							2018-03-01
+						</td>
+						<td>
+							0 元
+						</td>
+						<td>
+							0 元
+						</td>
+						<td>
+							<a href="#" class="table-operate"><icon class="icon operate-view"></icon><operatename>查看</operatename></a>
+						</td>
+					</tr>
+					<!---->
+					<tr ng-repeat="bill in vm.billsData.bills">
+						<td>
+							20180228344641213912
+						</td>
+						<td>
+							2018-02-28
+						</td>
+						<td>
+							0 元
+						</td>
+						<td>
+							0 元
+						</td>
+						<td>
+							<a href="#" class="table-operate"><icon class="icon operate-view"></icon><operatename>查看</operatename></a>
+						</td>
+					</tr>
+					<!----><!---->
+					</tbody>
+					</table>
+					<!---->
+					<div class="sr-wrap-pag" ng-if="vm.billsData &amp;&amp; vm.billsData.bills.length>
+						 0">
+						<ul class="pagination pull-right">
+							<li ng-class="{ disabled: !vm.billsData.pager.since }" class="disabled"><a ng-click="vm.goPrev()"><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+							<li ng-class="{ disabled: !vm.billsData.pager.max }" class="disabled"><a ng-click="vm.goNext()"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+						</ul>
+					</div>
+					<!---->
+				</div>
+			</div>
+			<!----><!---->
+		</div>
+	</div>
+{/block}

@@ -1,0 +1,132 @@
+<nav class="navbar wrap-outer" ng-controller="ContainerCtrl as vm">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="{:url('Index/index')}" target="_blank"></a>
+	</div>
+	<div class="collapse navbar-collapse">
+		<ul class="nav navbar-nav">
+			<!-- 总览 --><!---->
+			<li class="active"><a href="#">总览</a></li>
+			<!----><!---->
+			<li id="products-category" class="dropdown"><a href="#" class="dropdown-toggle"><span>云产品</span><span class="ng-hide">云存储</span><span class="caret"></span></a>
+			<div class="dropdown-menu dropdown-menu-products">
+				<p>
+					基础产品
+				</p>
+				<ul class="products-inline">
+					<!---->
+					<li class="cdn"><a href="#">CDN</a></li>
+					<!----><!---->
+					<li class="live"><a href="#">直播云</a></li>
+					<!----><!---->
+					<li class="file"><a href="#">云存储</a></li>
+					<!----><!---->
+					<li class="process"><a href="#">云处理</a></li>
+					<!---->
+				</ul>
+				<!---->
+				<p>
+					增值服务
+				</p>
+				<!----><!---->
+				<ul class="products-inline">
+					<li class="ssl"><a href="#">SSL 证书</a></li>
+					<li class="sms"><a href="#">短信服务</a></li>
+					<li class="audit"><a href="#">内容识别</a></li>
+					<li class="phone"><a href="#">流量营销</a></li>
+				</ul>
+				<!----><!---->
+				<p>
+					解决方案
+				</p>
+				<!----><!---->
+				<ul class="products-inline">
+					<li class="cross"><a href="#">融合云存储</a></li>
+					<li class="short-video"><a href="#" target="_blank">短视频</a></li>
+				</ul>
+				<!---->
+			</div>
+			</li>
+			<!----><!-- 统计 --><!---->
+			<li><a href="#">统计</a></li>
+			<!----><!-- 监控 --><!---->
+			<li><a href="{:url('Monitor/index')}">监控</a></li>
+			<!----><!-- 刷新 --><!---->
+			<li><a href="#">刷新</a></li>
+			<!----><!-- 工具箱 -->
+			<li class="dropdown"><a href="#" class="dropdown-toggle"><span>工具箱</span><span class="caret"></span></a>
+			<ul class="dropdown-menu dropdown-menu-toolbox">
+				<li class="cdn"><a href="#" target="_blank">CDN 诊断</a></li>
+				<li class="ip"><a href="#">IP 检测</a></li>
+				<!---->
+				<li class="log"><a href="#">日志下载</a></li>
+				<!----><!---->
+				<li class="alarm"><a href="#">告警监控</a></li>
+				<!---->
+				<li class="https-entrance"><a href="#" target="_blank">HTTPS 安全检测</a></li>
+			</ul>
+			</li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<!-- 消息 --><!---->
+			<li class="dropdown relative-li" is-open="vm.wrapshow"><a id="messageAlert" class="dropdown-toggle nav-message"></a><!----><span class="message-number">2</span><!---->
+			<div uib-dropdown-menu="" class="message-wrap dropdown-menu">
+				<div class="header-div">
+					<div class="triangle">
+					</div>
+					<span>未读通知 ( 2 )</span>
+				</div>
+				<div class="wrap-container">
+					<div class="content-message">
+						<ul class="content-nav">
+							<!---->
+							<li>
+							<p class="content-alert pull-left">
+								【通知】又拍云 CDN 平台上线码率自适应功能
+							</p>
+							<span class="content-date pull-right">2018-02-28</span></li>
+							<!---->
+							<li>
+							<p class="content-alert pull-left">
+								实名认证审核反馈
+							</p>
+							<span class="content-date pull-right">2018-02-28</span></li>
+							<!---->
+						</ul>
+					</div>
+					<div class="footer-message">
+						<a href="#" class="center-block">查看更多</a>
+					</div>
+				</div>
+			</div>
+			</li>
+			<!----><!-- 文档 -->
+			<li><a href="#" target="_blank">文档</a></li>
+			<!-- 工单 --><!---->
+			<li class="dropdown"><a href="#" class="dropdown-toggle workOrder-toggle"><span>工单</span><span class="caret"></span></a>
+			<ul class="dropdown-menu workOrder-dropdown">
+				<li class="submitWorkerOrder"><a href="#">提交工单</a></li>
+				<li class="workerOrder"><a href="#">我的工单</a></li>
+			</ul>
+			</li>
+			<!----><!-- 账号 -->
+			<li class="dropdown account-menu open"><a href="#" class="dropdown-toggle"><span class="user">mingyangzhiyuan</span><span class="caret"></span></a>
+			<ul class="dropdown-menu dropdown-menu-account">
+				<!---->
+				<li class="account"><a href="{:url('Account/index')}">账户管理</a></li>
+				<!----><!---->
+				<li class="billing"><a href="{:url('Finance/index')}">费用中心</a></li>
+				<!----><!---->
+				<li class="optLog"><a href="{:url('Log/index')}">操作日志</a></li>
+				<!----><!---->
+				<li class="recommendation"><a href="#">推荐好友</a></li>
+				<!----><!---->
+				<li class="line"></li>
+				<!---->
+				<li class="logout"><a href="#">退出</a></li>
+			</ul>
+			</li>
+		</ul>
+	</div>
+	<!-- /.navbar-collapse -->
+</div>
